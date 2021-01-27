@@ -1,0 +1,54 @@
+<%- include('../_layouts/adminheader') -%>
+<div class="container">
+    
+    <h2 class="page-title">Products</h2>
+    <a href="/admin/products/add-product" class="btn btn-primary">Add Products</a>
+    <br><br>
+    
+    <% if(count <= 0) { %>
+        <div class="text-center">No Product to Display</div>
+        <% } else { %>
+            <table class="table table-striped a">
+                <thead>
+                 <tr >
+                     <th>Product</th>
+                     <th>Price</th>
+                     <th>Category</th>
+                     <th>Image</th>
+                     <th>Edit</th>
+                     <th>Delete</th>
+                 </tr>
+                </thead>
+                <tbody> 
+                    <% products.forEach((data)=> { %>
+                        <tr>
+                        <td><%= data.title %></td>
+                        <td>$<%= parseFloat(data.price).toFixed(2) %></td>
+                        <td><%= data.category %></td>
+                <td>
+                        <% if(data.image == "") { %>
+                
+                            <!-- if no images then show the no imange that is in the public images folder -->
+                            <img id="noimage" src="/images/noimage.png" alt=""> 
+                            <% } else { %>
+                
+                                <!-- if images then create a image id with its image in the product_image folder -->
+                                <img id="noimage" src="/product_images/<%= data._id%>/<%= data.image%>" alt="">
+                
+                                <% } %>
+                            </td>
+                        <td><a href="/admin/products/edit-product/<%= data._id %>">Edit</a></td>
+                        <td><a class="confirmDeletion" href="/admin/products/delete-product/<%= data._id %>">Delete</a></td>
+                    
+                    </tr>
+                   <% }) %>
+                
+                </tbody>
+                
+                </table>
+            <% } %>
+
+    
+</div>
+    
+<%- include('../_layouts/adminfooter') -%>
